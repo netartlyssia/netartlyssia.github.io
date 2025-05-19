@@ -1,0 +1,72 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+img.clickable {
+  width: 150px;
+  cursor: pointer;
+}
+
+#corbeille {
+  width: 100px;
+  margin-top: 20px;
+}
+
+.star, .error-img {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 10;
+}
+/* Animation de glitch sur l'étoile */
+@keyframes glitch {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.glitch {
+  animation: glitch 0.1s infinite;
+  filter: hue-rotate(20deg) contrast(120%);
+}
+
+/* Style du bouton final */
+#restart {
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(to right, #ff0080, #7928ca);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 2rem;
+}
+
+#restart:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff0080;
+}
+
+

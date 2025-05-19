@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Hack Cadeau</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- SCÈNE 1 : Le cadeau -->
+  <div id="scene1" class="scene">
+    <h1>Tu as reçu un cadeau !</h1>
+    <img src="img/cadeau.png" id="cadeau" class="clickable" alt="cadeau" />
+  </div>
+
+  <!-- SCÈNE 2 : L'étoile apparaît -->
+  <div id="scene2" class="scene hidden">
+    <h1>Oh, une étoile !</h1>
+    <img src="img/etoile.png" id="etoile" class="clickable" alt="étoile" />
+    <!-- Ajout du bouton audio caché qui permet une interaction directe -->
+    <button id="playButton" style="display:none;">Play</button>
+  </div>
+
+  <!-- SCÈNE 3 : Bug -->
+  <div id="scene3" class="scene hidden">
+    <h1 id="bugText">Tu devrais la jeter...</h1>
+    <img src="img/etoile.png" id="etoileClone" class="clickable" alt="étoile" />
+    <img src="img/corbeille.png" id="corbeille" alt="corbeille" />
+    <div id="starsContainer"></div>
+    <div id="errorsContainer"></div>
+    <!-- Déplacement de la balise audio ici, mieux gérée par le navigateur -->
+    <audio id="glitchSound" src="audio/glitch.mp3" preload="auto"></audio>
+  </div>
+
+  <!-- SCÈNE 4 : Hack -->
+  <div id="scene4" class="scene hidden">
+    <h1>Eh eh, tu t'es fait hacker !!! ⁽⁽٩(๑˃̶͈̀ ᗨ ˂̶͈́)۶⁾⁾</h1>
+    <button id="restart">Je rigole, tiens pour me faire pardonner °(ᴖ◡ᴖ)°</button>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
