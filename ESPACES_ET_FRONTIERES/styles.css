@@ -1,0 +1,376 @@
+/* Styles globaux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: black;
+    color: #0f0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Styles communs pour les écrans */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+    z-index: 10;
+}
+
+/* Écran 1: Page d'accueil */
+#start-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.start-content {
+    text-align: center;
+}
+
+.start-content h1 {
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+    margin-bottom: 3rem;
+    color: #0f0;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+}
+
+#start-button {
+    font-family: 'Courier New', monospace;
+    background: none;
+    color: #0f0;
+    border: 2px solid #0f0;
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3rem;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+#start-button:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    text-shadow: 0 0 5px #0f0;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+/* Écran 2: La Terre */
+#earth-screen {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.earth-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/bg2.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.earth-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.prompt {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #0f0;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Écran 3: Carte interactive */
+#map-screen {
+    background-color: black;
+    padding: 20px;
+    overflow: auto;
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+#map-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0f0;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 3508px;
+    padding-top: 70.7%; /* Rapport d'aspect 3508:2480 (environ 70.7%) */
+    border: 2px solid #0f0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    cursor: pointer;
+}
+
+.map-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/bg.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.8) sepia(0.1) hue-rotate(20deg);
+    z-index: 1;
+}
+
+.green-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 255, 0, 0.07);
+    mix-blend-mode: overlay;
+    z-index: 2;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        transparent 50%, 
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.noise-overlay.active {
+    opacity: 0.2;
+}
+
+#map-regions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.region {
+    fill: rgba(0, 255, 0, 0.05);
+    stroke: rgba(0, 255, 0, 0.6);
+    stroke-width: 2;
+    transition: fill 0.3s ease;
+    cursor: pointer;
+    fill-opacity: 0.4;
+}
+
+.region:hover {
+    fill: rgba(0, 255, 0, 0.2);
+    fill-opacity: 0.6;
+}
+
+.region.active {
+    fill: rgba(0, 255, 0, 0.2);
+    fill-opacity: 0.6;
+}
+
+.region.pulse {
+    animation: pulse 1s infinite alternate;
+}
+
+.grid-lines line {
+    stroke: rgba(0, 255, 0, 0.2);
+    stroke-width: 1;
+    stroke-dasharray: 5, 5;
+}
+
+.info-display {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    color: #0f0;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.info-display.active {
+    opacity: 1;
+}
+
+.info-display.glitch {
+    animation: glitchText 0.3s infinite;
+}
+
+.status {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #0f0;
+    font-weight: bold;
+}
+
+.status.pulse {
+    animation: pulse 2s infinite alternate;
+}
+
+/* Écran 4: Code qui défile */
+#void-screen {
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+
+.matrix-code {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 1px solid #0f0;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    z-index: 20;
+    text-align: center;
+    max-width: 90%;
+    width: 500px;
+}
+
+.modal-content h2 {
+    color: #0f0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+.modal-content p {
+    color: #0f0;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* Animations */
+@keyframes glitchText {
+    0% { transform: translate(0, 0) skew(0deg, 0deg); }
+    20% { transform: translate(-2px, 0) skew(1deg, 0deg); }
+    40% { transform: translate(2px, -2px) skew(0deg, 1deg); }
+    60% { transform: translate(0, 2px) skew(-1deg, 0deg); }
+    80% { transform: translate(-2px, 0) skew(0deg, -1deg); }
+    100% { transform: translate(0, 0) skew(0deg, 0deg); }
+}
+
+@keyframes glitchEffect {
+    0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
+    14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
+    15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
+    49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
+    50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
+    99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
+    100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .start-content h1 {
+        font-size: 2rem;
+    }
+    
+    #start-button {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+    }
+    
+    .prompt {
+        font-size: 1rem;
+    }
+    
+    #map-title {
+        font-size: 1.2rem;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.2rem;
+    }
+}

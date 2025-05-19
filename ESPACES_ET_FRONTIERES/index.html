@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploration Terrestre</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Écran 1: Page d'accueil avec bouton START -->
+        <div id="start-screen" class="screen active">
+            <div class="start-content">
+                <h1>EXPLORATION TERRESTRE</h1>
+                <button id="start-button">START</button>
+            </div>
+        </div>
+
+        <!-- Écran 2: La Terre (bg2.png) -->
+        <div id="earth-screen" class="screen">
+            <div class="earth-container">
+                <div class="earth-overlay"></div>
+                <div class="prompt">Cliquez pour explorer plus profondément</div>
+            </div>
+        </div>
+
+        <!-- Écran 3: Carte interactive -->
+        <div id="map-screen" class="screen">
+            <div class="map-container">
+                <h1 id="map-title">CARTE MONDIALE: ANOMALIES DÉTECTÉES</h1>
+
+                <div class="map-wrapper">
+                    <!-- Affichage des informations glitchées -->
+                    <div id="info-display" class="info-display"></div>
+
+                    <!-- Background avec image fixe -->
+                    <div id="map-background" class="map-background"></div>
+                    
+                    <!-- Overlay vert pour effet glitch -->
+                    <div class="green-overlay"></div>
+                    
+                    <!-- Lignes scanlines CRT -->
+                    <div class="scanlines"></div>
+                    
+                    <!-- Bruit statique glitch -->
+                    <div id="noise-overlay" class="noise-overlay"></div>
+                    
+                    <!-- SVG avec régions cliquables -->
+                    <svg viewBox="0 0 3508 2480" id="map-regions" preserveAspectRatio="xMidYMid meet">
+                        <!-- Amérique du Nord -->
+                        <path 
+                            d="M170 650 L800 400 L950 500 L950 850 L800 1000 L700 1100 L500 1250 L300 1150 L200 900 Z" 
+                            class="region"
+                            data-region="northAmerica"
+                        />
+                        
+                        <!-- Groenland -->
+                        <path 
+                            d="M1200 250 L1450 300 L1550 400 L1400 550 L1200 500 Z" 
+                            class="region"
+                            data-region="greenland"
+                        />
+                        
+                        <!-- Amérique du Sud -->
+                        <path 
+                            d="M600 1300 L750 1250 L850 1500 L800 1900 L650 2100 L450 2000 L500 1500 Z" 
+                            class="region"
+                            data-region="southAmerica"
+                        />
+                        
+                        <!-- Europe -->
+                        <path 
+                            d="M1550 500 L1800 400 L2000 500 L1900 700 L1700 800 L1600 750 L1500 650 Z" 
+                            class="region"
+                            data-region="europe"
+                        />
+                        
+                        <!-- Afrique -->
+                        <path 
+                            d="M1600 800 L1900 800 L2100 1100 L2000 1600 L1700 1800 L1400 1700 L1300 1400 L1450 1000 Z" 
+                            class="region"
+                            data-region="africa"
+                        />
+                        
+                        <!-- Asie -->
+                        <path 
+                            d="M2000 450 L2900 400 L3100 800 L2800 1300 L2400 1300 L2100 1100 L1900 800 L1900 650 Z" 
+                            class="region"
+                            data-region="asia"
+                        />
+                        
+                        <!-- Océanie -->
+                        <path 
+                            d="M2800 1500 L3100 1600 L3200 1800 L3000 2000 L2700 1900 L2650 1700 Z" 
+                            class="region"
+                            data-region="oceania"
+                        />
+                        
+                        <!-- Lignes de grille -->
+                        <g class="grid-lines">
+                            <!-- Lignes horizontales -->
+                            <line x1="0" y1="248" x2="3508" y2="248" />
+                            <line x1="0" y1="496" x2="3508" y2="496" />
+                            <line x1="0" y1="744" x2="3508" y2="744" />
+                            <line x1="0" y1="992" x2="3508" y2="992" />
+                            <line x1="0" y1="1240" x2="3508" y2="1240" />
+                            <line x1="0" y1="1488" x2="3508" y2="1488" />
+                            <line x1="0" y1="1736" x2="3508" y2="1736" />
+                            <line x1="0" y1="1984" x2="3508" y2="1984" />
+                            <line x1="0" y1="2232" x2="3508" y2="2232" />
+                            
+                            <!-- Lignes verticales -->
+                            <line x1="350.8" y1="0" x2="350.8" y2="2480" />
+                            <line x1="701.6" y1="0" x2="701.6" y2="2480" />
+                            <line x1="1052.4" y1="0" x2="1052.4" y2="2480" />
+                            <line x1="1403.2" y1="0" x2="1403.2" y2="2480" />
+                            <line x1="1754" y1="0" x2="1754" y2="2480" />
+                            <line x1="2104.8" y1="0" x2="2104.8" y2="2480" />
+                            <line x1="2455.6" y1="0" x2="2455.6" y2="2480" />
+                            <line x1="2806.4" y1="0" x2="2806.4" y2="2480" />
+                            <line x1="3157.2" y1="0" x2="3157.2" y2="2480" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div id="map-status" class="status">EN ATTENTE // SURVOLEZ UNE RÉGION POUR SCANNER // CLIQUEZ N'IMPORTE OÙ POUR CONTINUER</div>
+            </div>
+        </div>
+
+        <!-- Écran 4: Code qui défile et message -->
+        <div id="void-screen" class="screen">
+            <div id="matrix-code" class="matrix-code"></div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h2>Vous avez atteint un lieu de non-retour</h2>
+                    <p>Bienvenue au fin fond de la terre, au-delà des frontières visuelles.</p>
+                    <p>Un espace d'où vous ne pourrez pas sortir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
