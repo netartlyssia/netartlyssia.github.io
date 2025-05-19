@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mainImage {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: opacity 0.5s ease;
+}
+
+#nextButton {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  animation: pulse 2s infinite ease-in-out;
+  pointer-events: auto;
+}
+
+#nextButton::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 5px 2px rgba(255, 255, 255, 0.6),
+    0 0 10px 5px rgba(255, 255, 255, 0.4),
+    0 0 15px 10px rgba(255, 255, 255, 0.2);
+  filter: blur(1px);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* Pour les dernières images où le personnage se désintègre */
+.particles #nextButton::after {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 0 5px 3px rgba(255, 255, 255, 0.5),
+    0 0 15px 10px rgba(255, 255, 255, 0.3);
+  filter: blur(2px);
+}
